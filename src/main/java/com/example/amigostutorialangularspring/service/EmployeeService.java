@@ -27,8 +27,16 @@ public class EmployeeService {
         return employeeRepo.findAll();
     }
 
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepo.save(employee);
+    public Employee updateEmployeeNameById(Employee employee, long id) {
+        return employeeRepo.findById(id).map(employee1 -> {
+            employee1.setName(employee.getName());
+
+            return employeeRepo.save(employee1);
+        }).orElseGet(() -> {
+            employee.setId(id);
+            return employeeRepo.save(employee);
+        });
+
     }
 
     public void deleteEmployee(Long id) {
@@ -39,4 +47,22 @@ public class EmployeeService {
         return employeeRepo.findEmployeeById(id)
                 .orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
     }
+
+    public Employee updateEmployeeById(Employee employee, long id) {
+        return employeeRepo.findById(id).map(employee1 -> {
+            employee1.setName(employee.getName());
+            employee1.setJobTitle(employee.getJobTitle());
+            employee1.setPhone(employee.getPhone());
+            employee1.setImageUrl(employee.getImageUrl());
+            return employeeRepo.save(employee1);
+        }).orElseGet(() -> {
+            employee.setId(id);
+            return employeeRepo.save(employee);
+        });
+    }
+
 }
+
+
+
+
