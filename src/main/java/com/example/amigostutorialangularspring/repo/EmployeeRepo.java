@@ -1,6 +1,12 @@
 package com.example.amigostutorialangularspring.repo;
 
+import com.example.amigostutorialangularspring.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Employee extends JpaRepository<Employee,Long> {
+import java.util.Optional;
+
+public interface EmployeeRepo extends JpaRepository<Employee, Long> {
+    void deleteEmployeeById(Long id);
+
+    Optional<Employee> findEmployeeById(Long id);
 }
